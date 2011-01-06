@@ -23,3 +23,10 @@ lines where there's a file path with the line number and it will open on a new w
 line where the error is.
 
 Of course, you can create some mappings to make easier to call the commands.
+
+NOTE
+----
+
+This fork of the plugin plays nice with Rails 3 and Bundler. If you've declared the g:RspecBundlerExec var in your .vimrc
+file, then specs are run with your app's gem bundle via the "bundle exec" command.  To disable this, remove 
+the g:RspecBundlerExec declaration from you .vimrc file.
