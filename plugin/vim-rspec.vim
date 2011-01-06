@@ -98,7 +98,11 @@ function! s:RunSpecMain(type)
 			call s:notice_msg("Running spec on the current file with ".l:type." ...")
       let l:spec_bin = s:fetch("RspecBin",l:default_cmd)
       let l:spec_opts = s:fetch("RspecOpts", "")
-      let l:spec = l:spec_bin . " " . l:spec_opts . " -f h " . l:bufn
+      if exists("g:bundle_exec_spec")
+        let l:spec = "bundle exec \"" . l:spec_bin . " " . l:spec_opts . " -f h " . l:bufn . "\""
+      else
+        let l:spec = l:spec_bin . " " . l:spec_opts . " -f h " . l:bufn
+      end
 		else
 			call s:error_msg("Seems ".l:bufn." is not a *_spec.rb file")
 			return
@@ -131,7 +135,11 @@ function! s:RunSpecMain(type)
 			return
 		end
     let l:spec = s:fetch("RspecBin", "spec") . s:fetch("RspecOpts", "")
-    let l:spec = l:spec . " -f h " . l:dir . " -p **/*_spec.rb"
+    if exists("g:bundle_exec_spec")
+      let l:spec = "bundle exec \"" . l:spec . " -f h " . l:dir . " -p **/*_spec.rb" . "\""
+    else
+      let l:spec = l:spec . " -f h " . l:dir . " -p **/*_spec.rb"
+    end
 	end		
 
 	" run the spec command
