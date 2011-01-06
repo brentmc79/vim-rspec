@@ -14,6 +14,7 @@
 "   * g:RspecRBFilePath  :: Path to vim-rspec.rb
 "   * g:RspecBin         :: Rspec binary command (in rspec 2 this is 'rspec')
 "   * g:RspecOpts        :: Opts to send to rspec call
+"   * g:RspecBundlerExec :: Specify whether to run spec via 'bundle exec'
 
 let s:xsltproc_cmd	= ""
 let s:grep_cmd			= ""
@@ -98,7 +99,7 @@ function! s:RunSpecMain(type)
 			call s:notice_msg("Running spec on the current file with ".l:type." ...")
       let l:spec_bin = s:fetch("RspecBin",l:default_cmd)
       let l:spec_opts = s:fetch("RspecOpts", "")
-      if exists("g:bundle_exec_spec")
+      if exists("g:RspecBundlerExec")
         let l:spec = "bundle exec \"" . l:spec_bin . " " . l:spec_opts . " -f h " . l:bufn . "\""
       else
         let l:spec = l:spec_bin . " " . l:spec_opts . " -f h " . l:bufn
@@ -135,7 +136,7 @@ function! s:RunSpecMain(type)
 			return
 		end
     let l:spec = s:fetch("RspecBin", "spec") . s:fetch("RspecOpts", "")
-    if exists("g:bundle_exec_spec")
+    if exists("g:RspecBundlerExec")
       let l:spec = "bundle exec \"" . l:spec . " -f h " . l:dir . " -p **/*_spec.rb" . "\""
     else
       let l:spec = l:spec . " -f h " . l:dir . " -p **/*_spec.rb"
